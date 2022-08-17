@@ -1,0 +1,8 @@
+.active_bouton {
+    background : #FD2D01;
+    font-weight: bold;
+}
+
+.desactive_bouton {
+    background : white;
+}

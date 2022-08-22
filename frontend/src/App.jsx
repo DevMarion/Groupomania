@@ -42,7 +42,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Connexion />}></Route>
           <Route path="/fil-d-actualite" element={<Posts />}></Route>
-          <Route element={<Error />}></Route>
+          <Route path="*" element={<Error />}></Route>
         </Routes>
       </Router>
       <Footer />

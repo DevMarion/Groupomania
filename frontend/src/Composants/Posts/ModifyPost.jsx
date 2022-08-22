@@ -12,29 +12,50 @@ const Modifs = styled.img`
   height: 26px;
 `;
 
-function ModifyPost(post) {
-  const formData = new FormData();
-  formData.append('message', post.message);
+const Img = styled.img`
+  height: 20px;
+  padding: 6px;
+  border-radius: 100%;
+`;
 
-  axios({
-    method: 'put',
-    url: 'http://localhost:3001/api/post/' + post._id,
-    data: formData,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(function (response) {
-      console.log(response);
+function ModifyPost({ post }) {
+  const [message, setMessage] = useState('');
+
+  const postModifie = (e) => {
+    console.log('post----------', post);
+    console.log('e----------', e);
+
+    e.preventDefault();
+    console.log('message');
+    // if (message) {
+    const formData = new FormData();
+    formData.append('message', 'modif ok  ');
+    console.log('form', post.message);
+
+    axios({
+      method: 'put',
+      url: 'http://localhost:3001/api/post/' + post._id,
+      data: formData,
+      widthCredentials: true,
     })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then((res) => {
+        console.log('modifier', res);
+        // window.location.reload();
+      })
+      .catch((err) => {
+        console.log('erreur : ', err);
+      });
+    // } //else {
+    //   alert('Veuillez entrer un message');
+    // }
+  };
 
   return (
-    <Bouton onClick={ModifyPost}>
-      <Modifs src={Valider} alt="valider les modifications" />
-    </Bouton>
+    <>
+      <div onClick={postModifie}>
+        <Img src={Valider} alt="bouton envoyer post" />
+      </div>
+    </>
   );
 }
 

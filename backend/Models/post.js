@@ -8,7 +8,6 @@ const postsSchema = mongoose.Schema({
     likes: { type: Number, defaut: 0 },
     dislikes: { type: Number, defaut: 0 },
     usersLiked: { type: [String] },
-    creationDate: { type: Date, default: new Date() },
     usersDisliked: { type: [String] },
     commentaires: {
         type: [

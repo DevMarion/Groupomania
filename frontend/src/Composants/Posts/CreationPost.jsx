@@ -31,7 +31,6 @@ const PostContainer = styled.div`
   font-size: 20px;
   padding: 12px 0 12px 15px;
   margin-left: 10px;
-  border-radius: 20px;
   border: 3px solid ${colors.primary};
 `;
 
@@ -134,7 +133,6 @@ function CreationPost() {
   const telechargementPhoto = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setFichier(e.target.files[0]);
-    console.log('fichier----', e.target.files[0]);
     setVideo('');
   };
 
@@ -161,6 +159,8 @@ function CreationPost() {
         console.log('reponse', fichier);
         setMessage('');
         setImage(null);
+        setVideo('');
+        window.location.reload();
       })
       .catch((error) => {
         console.log('AxiosErreur', error);

@@ -35,7 +35,26 @@ exports.deletePost = (req, res, next) => {
     postModels.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).json({ message: "Post supprimé" }))
         .catch(error => res.status(400).json({ error }));
+    console.log('id2', req.params.id);
 };
+
+// exports.deletePost = (req, res, next) => {
+//     console.log('id2', req.params.id)
+//     postModels.findOne({ _id: req.params.id })
+//         .then((post) => {
+//             const filename = post.photo.split('/photos/')[1];
+//             fs.unlink(`photos/${filename}`, () => {
+//                 postModels.deleteOne({ _id: req.params.id })
+//                     .then(() => res.status(200).json({ message: 'Publication supprimée' }))
+//                     .catch(error => res.status(400).json({ error }));
+//             })
+//         })
+//         .catch(error => res.status(400).json({ message: error }));
+// };
+
+
+
+
 
 // // exports.getOnePost = (req, res, next) => {
 //     postModels.findOne({ _id: req.params.id })

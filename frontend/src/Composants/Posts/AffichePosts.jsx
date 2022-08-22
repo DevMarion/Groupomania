@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 import { Vide, dateParser } from '../../Outils/Date';
 import colors from '../../Outils/colors';
@@ -12,6 +10,7 @@ import Modification from '../../Images/modification.png';
 import DeletePost from './DeletePost';
 import ModifyPost from './ModifyPost';
 import Commentaires from './Commentaires';
+import LikesDislikes from './Likes_Dislikes';
 
 const Container = styled.div`
   display: flex;
@@ -94,7 +93,7 @@ function PostsListe() {
       });
   };
 
-  useEffect(() => getAllPosts(), []); // [posts]
+  useEffect(() => getAllPosts(), []);
 
   return (
     <ul>
@@ -120,8 +119,8 @@ function PostsListe() {
                   <Bouton2 onClick={() => setModifie(!modifie)}>
                     <Modif src={Modification} alt="modification" />
                   </Bouton2>
-                  {modifie && <ModifyPost post={post} key={post._id} />}
-                  <DeletePost id={post._id} />
+                  {modifie && <ModifyPost post={post} />}
+                  <DeletePost post={post} />
                 </div>
               </Div>
               {post.photo && <Photo src={post.photo} alt="card" />}
@@ -144,13 +143,9 @@ function PostsListe() {
                   alt="icone commentaire"
                 />
                 <span>{post.commentaires.lenght}</span>
-                <button>
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                </button>
-                <button>
-                  <FontAwesomeIcon icon={faThumbsDown} />
-                </button>
+                <LikesDislikes post={post} />
               </Footer>
+              <br />
               {comments && <Commentaires post={post} />}
             </Container>
           );

@@ -8,9 +8,10 @@ import Suppression from '../../Images/delete.png';
 
 const Supp = styled.img`
   height: 26px;
+  margin-left: 680px;
 `;
 
-function DeletePost({ post }) {
+function DeleteComment({ comment, post }) {
   const mySwal = withReactContent(Swal);
 
   const supprimer = () => {
@@ -18,7 +19,7 @@ function DeletePost({ post }) {
       .fire({
         icon: 'warning',
         iconColor: 'blue',
-        title: 'Voulez vous vraiment supprimer ce post ?',
+        title: 'Voulez vous vraiment supprimer ce commentaire ?',
         showDenyButton: true,
         showCancelButton: false,
         confirmButtonText: 'Supprimer',
@@ -28,14 +29,16 @@ function DeletePost({ post }) {
       .then((res) => {
         if (res.isConfirmed) {
           axios({
-            method: 'delete',
-            url: 'http://localhost:3001/api/post/' + post._id,
+            method: 'patch',
+            url:
+              'http://localhost:3001/api/post/delete-commentaire-post/' +
+              post._id,
           })
             .then((res) => {
               console.log('réponse', res);
               mySwal.fire({
                 icon: 'success',
-                title: 'Post supprimé',
+                title: 'Commentaire supprimé',
               });
               window.location.reload();
             })
@@ -45,7 +48,7 @@ function DeletePost({ post }) {
         } else if (res.isDenied) {
           mySwal.fire({
             icon: 'error',
-            title: 'Post non supprimé',
+            title: 'Commentaire non supprimé',
             confirmButtonColor: 'green',
           });
         }
@@ -63,4 +66,4 @@ function DeletePost({ post }) {
   );
 }
 
-export default DeletePost;
+export default DeleteComment;

@@ -8,9 +8,9 @@ import Profil from '../../Images/profile.png';
 import commentaires from '../../Images/commentaires.png';
 import Modification from '../../Images/modification.png';
 import DeletePost from './DeletePost';
-import ModifyPost from './ModifyPost';
 import Commentaires from './Commentaires';
 import LikesDislikes from './Likes_Dislikes';
+import ModifyPost from './ModifyPost';
 
 const Container = styled.div`
   display: flex;
@@ -51,16 +51,6 @@ const Modif = styled.img`
   height: 26px;
 `;
 
-const Message = styled.textarea`
-  width: 330%;
-  font-size: 15px;
-  padding: 5px 0 12px 15px;
-  margin-left: 10px;
-  border-radius: 20px;
-  outline: none;
-  border: 3px solid ${colors.primary};
-`;
-
 const Bouton2 = styled.button`
   border: none;
   background: none;
@@ -74,18 +64,22 @@ const Div = styled.div`
 function PostsListe() {
   const [posts, setPosts] = useState([]);
   const [modifie, setModifie] = useState(false);
-  const [texteModifie, setTexteModifie] = useState(null);
+  const [itemClick, setItemClick] = useState();
   const [comments, setComments] = useState(false);
+
+  const jwtToken = localStorage.getItem('tokens');
+  console.log('token', `Bearer ${jwtToken}`);
 
   const getAllPosts = () => {
     axios({
       method: 'get',
       url: 'http://localhost:3001/api/post',
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
     })
       .then((response) => {
         const allPosts = response.data.posts;
-        console.log('photo', response.data.posts[0].photo);
-        console.log('allPosts', allPosts);
         setPosts(allPosts);
       })
       .catch((error) => {
@@ -95,8 +89,14 @@ function PostsListe() {
 
   useEffect(() => getAllPosts(), []);
 
+  function action(post) {
+    setItemClick(post);
+    setModifie(!modifie);
+  }
+
   return (
     <ul>
+      {itemClick && <ModifyPost post={itemClick} />}
       {!Vide(posts[0]) &&
         posts.map((post) => {
           return (
@@ -107,19 +107,14 @@ function PostsListe() {
               </Header>
               <Div>
                 {modifie === false && <p>{post.message}</p>}
-                {modifie && (
-                  <div>
-                    <Message
-                      defaultValue={post.message}
-                      onChange={(e) => setTexteModifie(e.target.value)}
-                    />
-                  </div>
-                )}
                 <div>
-                  <Bouton2 onClick={() => setModifie(!modifie)}>
+                  <Bouton2
+                    onClick={(e) => {
+                      action(post);
+                    }}
+                  >
                     <Modif src={Modification} alt="modification" />
                   </Bouton2>
-                  {modifie && <ModifyPost post={post} />}
                   <DeletePost post={post} />
                 </div>
               </Div>

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 
-import { UidContext } from './Composants/Context/UidContext';
+import { UidProvider } from './Composants/Context/UidContext';
+import { TokenProvider } from './Composants/Context/TokenContext';
 
 import colors from './Outils/colors';
 import Connexion from './Pages/Connexion';
@@ -22,31 +23,24 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const [uid, setUid] = useState(null);
-
-  const UidLocalStorage = () => {
-    const uid = localStorage.getItem('userId');
-    console.log(uid);
-    if (!uid) {
-      return {};
-    } else {
-      return JSON.parse(uid);
-    }
-  };
+  const [uid, setUid] = useState('');
+  const [token, setToken] = useState('');
 
   return (
-    <UidContext.Provider value={{ uid, setUid }}>
-      <Router>
-        <GlobalStyle />
-        <Header />
-        <Routes>
-          <Route exact path="/" element={<Connexion />}></Route>
-          <Route path="/fil-d-actualite" element={<Posts />}></Route>
-          <Route path="*" element={<Error />}></Route>
-        </Routes>
-      </Router>
-      <Footer />
-    </UidContext.Provider>
+    <UidProvider value={{ uid, setUid }}>
+      <TokenProvider value={{ token, setToken }}>
+        <Router>
+          <GlobalStyle />
+          <Header />
+          <Routes>
+            <Route exact path="/" element={<Connexion />}></Route>
+            <Route path="/fil-d-actualite" element={<Posts />}></Route>
+            <Route path="*" element={<Error />}></Route>
+          </Routes>
+        </Router>
+        <Footer />
+      </TokenProvider>
+    </UidProvider>
   );
 }
 

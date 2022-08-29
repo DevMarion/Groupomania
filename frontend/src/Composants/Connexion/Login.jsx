@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
 import colors from '../../Outils/colors';
+import { UidContext } from '../Context/UidContext';
+import { TokenContext } from '../Context/TokenContext';
 
 const Formulaire = styled.div`
   background: ${colors.option};
@@ -57,6 +59,9 @@ const Div = styled.div`
 `;
 
 function Login() {
+  const { setUid } = useContext(UidContext);
+  const { setToken } = useContext(TokenContext);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -81,6 +86,9 @@ function Login() {
         if (res.status === 200) {
           emailErreur.innerHTML = '';
           passwordErreur.innerHTML = '';
+
+          setUid(`${res.data.userId}`);
+          setToken(`${res.data.token}`);
 
           localStorage.setItem('tokens', JSON.stringify(res.data.token));
           localStorage.setItem('userId', `${res.data.userId}`);

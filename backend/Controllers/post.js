@@ -65,7 +65,7 @@ exports.deletePost = (req, res, next) => {
 exports.likePost = (req, res, next) => {
     postModels.findOne({ _id: req.params.id })
         .then(post => {
-            if (!post.usersLiked.includes(req.body.userId) && req.body.like === +1) {
+            if (!post.usersLiked.includes(req.body.userId) && req.body.like === 1) {
                 postModels.updateOne(
                     { _id: req.params.id },
                     {

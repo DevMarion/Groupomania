@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
@@ -37,10 +37,10 @@ function LikesDislikes({ post }) {
       },
     })
       .then((res) => {
-        console.log('like', res);
+        console.log(res);
       })
-      .catch((err) => {
-        console.log('erreur', err);
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -54,10 +54,10 @@ function LikesDislikes({ post }) {
       },
     })
       .then((res) => {
-        console.log('dislike', res);
+        console.log(res);
       })
-      .catch((err) => {
-        console.log('erreur', err);
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -65,12 +65,12 @@ function LikesDislikes({ post }) {
     <Div>
       <Bouton onClick={(e) => Like(e)}>
         <FontAwesomeIcon icon={faThumbsUp} />
+        <span>{post.likes}</span>
       </Bouton>
-      <span>{post.likes}</span>
       <Bouton2 onClick={(e) => Dislike(e)}>
         <FontAwesomeIcon icon={faThumbsDown} />
+        <span>{post.dislikes}</span>
       </Bouton2>
-      <span>{post.dislikes}</span>
     </Div>
   );
 }

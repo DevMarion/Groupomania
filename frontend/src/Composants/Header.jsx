@@ -25,6 +25,7 @@ function Header() {
   return (
     <Div>
       <Image src={Logo} alt="logo Groupomania rouge" />
+      <h1>Bienvenue</h1>
       <Link to="/">
         <Image2 src={LogoOut} alt="icone Logout" />
       </Link>

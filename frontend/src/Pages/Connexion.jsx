@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import colors from '../Outils/colors';
 import connect from '../Images/connexion.png';
-import active_bouton from '../Outils/style.css';
+import style from '../Outils/style.css';
 
 const Div = styled.div`
   display: flex;

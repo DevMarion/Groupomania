@@ -8,7 +8,7 @@ import Suppression from '../../Images/delete.png';
 
 const Supp = styled.img`
   height: 26px;
-  margin-left: 680px;
+  margin-left: 94%;
 `;
 
 function DeleteComment({ comment, post }) {
@@ -33,6 +33,7 @@ function DeleteComment({ comment, post }) {
             url:
               'http://localhost:3001/api/post/delete-commentaire-post/' +
               post._id,
+            data: comment._id,
           })
             .then((res) => {
               console.log('réponse', res);
@@ -40,7 +41,7 @@ function DeleteComment({ comment, post }) {
                 icon: 'success',
                 title: 'Commentaire supprimé',
               });
-              window.location.reload();
+              // window.location.reload();
             })
             .catch((err) => {
               console.log('erreur : ', err);
